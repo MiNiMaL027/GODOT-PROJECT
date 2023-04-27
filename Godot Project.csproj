@@ -1,0 +1,13 @@
+<Project Sdk="Godot.NET.Sdk/4.0.1">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>GodotProject</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="content\Layer.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Scripts\Interfaces\" />
+  </ItemGroup>
+</Project>

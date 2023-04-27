@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://bymidod3airj4"]
+
+[ext_resource type="Texture2D" uid="uid://dqerspgxirpuf" path="res://Content/Components/Monsters/SlimeHeard.png" id="2_rsj1a"]
+
+[node name="MonsterHpWidget" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HpContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.03
+offset_right = 0.399998
+offset_bottom = 16.0
+grow_horizontal = 2
+theme_override_constants/separation = -4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HpContainer"]
+layout_mode = 2
+texture = ExtResource("2_rsj1a")
+
+[node name="TextureRect3" type="TextureRect" parent="HpContainer"]
+layout_mode = 2
+texture = ExtResource("2_rsj1a")
+
+[node name="TextureRect2" type="TextureRect" parent="HpContainer"]
+layout_mode = 2
+texture = ExtResource("2_rsj1a")

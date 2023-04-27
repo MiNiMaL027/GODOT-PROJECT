@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://c32kim2qi4mop"]
+
+[ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/UI/UI_HpAndArmor.cs" id="1_rak1n"]
+[ext_resource type="Texture2D" uid="uid://d0tmc1j1c2mmu" path="res://Content/Components/Player/UI/Items/Heart.png" id="2_nke6p"]
+[ext_resource type="Texture2D" uid="uid://cslgawx4p68d8" path="res://Content/Components/Player/UI/Items/Armor.png" id="3_kda1o"]
+
+[node name="HpAndManaWidget" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rak1n")
+
+[node name="ArmorContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 76.0
+offset_bottom = 40.0
+scale = Vector2(1, 0.44)
+theme_override_constants/separation = -2
+
+[node name="HpContainer" type="HBoxContainer" parent="ArmorContainer"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="TextureRect2" type="TextureRect" parent="ArmorContainer/HpContainer"]
+layout_mode = 2
+texture = ExtResource("2_nke6p")
+
+[node name="TextureRect2" type="TextureRect" parent="ArmorContainer"]
+layout_mode = 2
+texture = ExtResource("3_kda1o")

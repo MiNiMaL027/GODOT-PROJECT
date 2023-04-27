@@ -1,0 +1,9 @@
+1 - All that can't go through StaticBody (WordCollision)
+2 - Player (PhisicCollision)
+3 - Enemy (PhisicCollision)
+4 - HitBox (Can Take Damage)
+5 - EnemyHitBox (Can Take Player Damage)
+6 - AttackCollision (Can Cause Damage)
+7 - EnemyAttackCollision (Can Cause Damage)
+8 - Observation
+9 - AttackRange

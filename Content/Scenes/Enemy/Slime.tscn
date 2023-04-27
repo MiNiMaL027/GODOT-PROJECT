@@ -1,0 +1,379 @@
+[gd_scene load_steps=28 format=3 uid="uid://codf140vkt11n"]
+
+[ext_resource type="Script" path="res://Content/Scripts/Characters/Slime/SlimeController.cs" id="1_mp640"]
+[ext_resource type="Script" path="res://Content/Scripts/Characters/Slime/SlimePawn.cs" id="2_n0px5"]
+[ext_resource type="Script" path="res://Content/Scripts/GameComponents/DamageArea.cs" id="3_ln1x8"]
+[ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/HealthComponent.cs" id="3_rbbrk"]
+[ext_resource type="Script" path="res://Content/Scripts/GameComponents/HitBoxCollision.cs" id="5_cgn0o"]
+[ext_resource type="AudioStream" uid="uid://vv31atkvqw0f" path="res://Content/Components/Sounds/GameSound/Slime/SlimeHurt.mp3" id="6_7ippy"]
+[ext_resource type="AudioStream" uid="uid://bcyq6n2sysnhh" path="res://Content/Components/Sounds/GameSound/Slime/SlimeDead.mp3" id="6_xgfit"]
+[ext_resource type="Texture2D" uid="uid://nq50gpgbrc2t" path="res://Content/Components/Monsters/Slime/Animations/slime-Sheet.png" id="7_igkd7"]
+[ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/ObservationComponent.cs" id="8_57psx"]
+[ext_resource type="PackedScene" uid="uid://bymidod3airj4" path="res://Content/Scenes/Enemy/monster_hp_widget.tscn" id="9_jjt2m"]
+[ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/AttackComponent.cs" id="9_x2go0"]
+[ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/UI/UI_MonsterHUD.cs" id="10_xdbu6"]
+[ext_resource type="Texture2D" uid="uid://dqerspgxirpuf" path="res://Content/Components/Monsters/SlimeHeard.png" id="11_sbmjj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aok50"]
+size = Vector2(15, 24)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1tff1"]
+radius = 6.0
+height = 28.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xf5qv"]
+radius = 7.0
+height = 24.0
+
+[sub_resource type="Animation" id="Animation_0ccdv"]
+resource_name = "Attack"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlimeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackComponent")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"AttackStart"
+}, {
+"args": [],
+"method": &"FinishAttack"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageArea")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"ActiveDamageArea"
+}, {
+"args": [],
+"method": &"DisableDamageArea"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_jq02h"]
+resource_name = "Dead"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlimeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [16, 17, 18, 19, 20, 21]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Dead"
+}]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.108815,
+"stream": ExtResource("6_xgfit")
+}],
+"times": PackedFloat32Array(0.00881454)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_7nc8i"]
+resource_name = "Hurt"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlimeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Endhurt"
+}]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_7ippy")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_mijqf"]
+resource_name = "Idle"
+length = 0.8
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlimeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_bhska"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlimeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_002mh"]
+resource_name = "UpAttack"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlimeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [15, 17, 18, 17, 15]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackComponent")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"AttackStart"
+}, {
+"args": [],
+"method": &"FinishAttack"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageArea")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"ActiveDamageArea"
+}, {
+"args": [],
+"method": &"DisableDamageArea"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_5hk5v"]
+resource_name = "Walk"
+length = 0.6
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlimeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gtdcw"]
+_data = {
+"Attack": SubResource("Animation_0ccdv"),
+"Dead": SubResource("Animation_jq02h"),
+"Hurt": SubResource("Animation_7nc8i"),
+"Idle": SubResource("Animation_mijqf"),
+"RESET": SubResource("Animation_bhska"),
+"UpAttack": SubResource("Animation_002mh"),
+"Walk": SubResource("Animation_5hk5v")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a7ido"]
+size = Vector2(100, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2upwp"]
+size = Vector2(100, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_142l8"]
+size = Vector2(40, 20)
+
+[node name="SlimeController" type="Node2D"]
+script = ExtResource("1_mp640")
+
+[node name="AiBody" type="CharacterBody2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("2_n0px5")
+
+[node name="HealthComponent" type="Node" parent="AiBody"]
+script = ExtResource("3_rbbrk")
+
+[node name="PhithicCollison" type="CollisionShape2D" parent="AiBody"]
+position = Vector2(1.99999, 1.50001)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_aok50")
+debug_color = Color(0.658824, 0.513726, 0.0156863, 0.419608)
+
+[node name="DamageArea" type="Area2D" parent="AiBody"]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("3_ln1x8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AiBody/DamageArea"]
+position = Vector2(0, -6)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_1tff1")
+disabled = true
+debug_color = Color(0.992157, 0, 0.227451, 0.419608)
+
+[node name="Body" type="Area2D" parent="AiBody"]
+collision_layer = 16
+collision_mask = 32
+script = ExtResource("5_cgn0o")
+CollisionType = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AiBody/Body"]
+position = Vector2(0, -1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_xf5qv")
+debug_color = Color(0, 0.627451, 0.513726, 0.419608)
+
+[node name="Animation" type="AnimationPlayer" parent="AiBody"]
+libraries = {
+"": SubResource("AnimationLibrary_gtdcw")
+}
+
+[node name="SlimeSprite" type="Sprite2D" parent="AiBody"]
+position = Vector2(0, -7)
+texture = ExtResource("7_igkd7")
+hframes = 8
+vframes = 3
+frame = 4
+
+[node name="WalkDuration" type="Timer" parent="AiBody"]
+wait_time = 5.0
+autostart = true
+
+[node name="ObservationComponent" type="Area2D" parent="AiBody"]
+collision_layer = 128
+collision_mask = 2
+script = ExtResource("8_57psx")
+
+[node name="LeftCollisionShape2D" type="CollisionShape2D" parent="AiBody/ObservationComponent"]
+position = Vector2(-50, -6)
+shape = SubResource("RectangleShape2D_a7ido")
+debug_color = Color(0, 0.619608, 0.721569, 0.419608)
+
+[node name="RightCollisionShape2D2" type="CollisionShape2D" parent="AiBody/ObservationComponent"]
+position = Vector2(50, -6)
+shape = SubResource("RectangleShape2D_2upwp")
+debug_color = Color(0, 0.603922, 0.686275, 0.419608)
+
+[node name="AttackComponent" type="Area2D" parent="AiBody"]
+collision_layer = 256
+collision_mask = 2
+script = ExtResource("9_x2go0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AiBody/AttackComponent"]
+position = Vector2(0.25, -6)
+shape = SubResource("RectangleShape2D_142l8")
+debug_color = Color(0.298039, 0.815686, 0, 0.419608)
+
+[node name="MonsterHpWidget" parent="AiBody" instance=ExtResource("9_jjt2m")]
+offset_top = -25.0
+offset_bottom = -25.0
+script = ExtResource("10_xdbu6")
+Hp = ExtResource("11_sbmjj")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="AiBody"]
