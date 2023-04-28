@@ -1,25 +1,26 @@
 ﻿using GodotProject.Content.Scripts.Ai.AiComponents.Stans.Options;
+using GodotProject.Content.Scripts.Controllers;
+using static Godot.TextServer;
 
 namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.SlimeStans
 {
-    public class Aggression : State<SlimeController>
+    public class SlimeRest : State<SlimeController>
     {
         public override void Enter(SlimeController Owner)
         {
-            Owner.Speed *= 2;
+
         }
 
         public override void Execute(SlimeController Owner)
         {
-            if (Owner.AiBody2D.ObservationComponent.PawnEnemy.HealthComponent.IsDead)
-                Owner.StanController.ChangeState(Owner.Idle);
-            StateOptions.ChoseDirectionRetailivelyFromPlayer(Owner);
             StateOptions.MovePawn(Owner);
         }
 
         public override void Exit(SlimeController Owner)
         {
-            Owner.Speed /= 2;
-        }     
+
+        }
+
+
     }
 }

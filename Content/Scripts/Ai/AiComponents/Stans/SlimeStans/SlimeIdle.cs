@@ -2,7 +2,7 @@
 
 namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.SlimeStans
 {
-    public class Idle : State<SlimeController>
+    public class SlimeIdle : State<SlimeController>
     {
         public override void Enter(SlimeController Owner)
         {

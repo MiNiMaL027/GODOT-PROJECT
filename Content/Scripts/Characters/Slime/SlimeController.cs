@@ -10,9 +10,9 @@ using static Godot.TextServer;
 public partial class SlimeController : AiController
 {
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-    public State<SlimeController> Rest { get; set; } = new Rest();
-    public State<SlimeController> Aggression { get; set; } = new Aggression();
-    public State<SlimeController> Idle { get; set; } = new Idle();
+    public State<SlimeController> Rest { get; set; } = new SlimeRest();
+    public State<SlimeController> Aggression { get; set; } = new SlimeAggression();
+    public State<SlimeController> Idle { get; set; } = new SlimeIdle();
     public StateController<SlimeController> StanController { get; set; }
 
     public override void _Ready()

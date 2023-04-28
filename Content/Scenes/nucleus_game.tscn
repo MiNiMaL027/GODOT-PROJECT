@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://ciohgk1omldlw"]
+[gd_scene load_steps=7 format=3 uid="uid://ciohgk1omldlw"]
 
 [ext_resource type="PackedScene" uid="uid://vqjqn8dnctrf" path="res://Content/Scenes/World.tscn" id="2_8ux1a"]
 [ext_resource type="PackedScene" uid="uid://dkp02og30gwkd" path="res://Content/Scenes/Player.tscn" id="2_pbypm"]
 [ext_resource type="AudioStream" uid="uid://bma3tb3801jae" path="res://Content/Components/Sounds/11.04.2023.ogg" id="3_3n35e"]
-[ext_resource type="PackedScene" uid="uid://codf140vkt11n" path="res://Content/Scenes/Enemy/Slime.tscn" id="4_msmn3"]
-[ext_resource type="PackedScene" uid="uid://bnvynwboubwxt" path="res://Content/Scenes/Enemy/BigSlime.tscn" id="5_k8u77"]
+[ext_resource type="PackedScene" uid="uid://me8f1yryttl7" path="res://Content/Scenes/Enemy/Slime.tscn" id="4_msmn3"]
+[ext_resource type="PackedScene" uid="uid://nditpogj6ye5" path="res://Content/Scenes/Enemy/BigSlime.tscn" id="5_k8u77"]
+[ext_resource type="PackedScene" uid="uid://cnn16q314kq7m" path="res://Content/Scenes/Enemy/FriendlyWolf.tscn" id="6_1vvnp"]
 
 [node name="nucleusGame" type="Node"]
 
@@ -20,7 +21,10 @@ volume_db = -10.0
 autoplay = true
 
 [node name="SlimeController" parent="." instance=ExtResource("4_msmn3")]
-position = Vector2(113, -83)
+position = Vector2(-379, -73)
 
 [node name="BigSlimeController" parent="." instance=ExtResource("5_k8u77")]
-position = Vector2(-124, -67)
+position = Vector2(-299, -72)
+
+[node name="WolfController" parent="." instance=ExtResource("6_1vvnp")]
+position = Vector2(163, -95)

@@ -23,8 +23,8 @@ public partial class HitBoxCollision : Area2D
 
         if(CollisionType == BodyParts.Head)
             HitBoxOwner.HealthComponent.TakeDamage(damage: damage, true);
-
-        HitBoxOwner.HealthComponent.TakeDamage(damage: damage);
+        else
+            HitBoxOwner.HealthComponent.TakeDamage(damage: damage);
     }
 
     //public void DisableHitBox()

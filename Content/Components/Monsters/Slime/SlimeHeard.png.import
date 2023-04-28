@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqerspgxirpuf"
-path="res://.godot/imported/SlimeHeard.png-e1d8bee11fe70bc9c0266fb9c4c2af23.ctex"
+path="res://.godot/imported/SlimeHeard.png-6a5a49226d4137e79cdef90344afa13e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Content/Components/Monsters/SlimeHeard.png"
-dest_files=["res://.godot/imported/SlimeHeard.png-e1d8bee11fe70bc9c0266fb9c4c2af23.ctex"]
+source_file="res://Content/Components/Monsters/Slime/SlimeHeard.png"
+dest_files=["res://.godot/imported/SlimeHeard.png-6a5a49226d4137e79cdef90344afa13e.ctex"]
 
 [params]
 

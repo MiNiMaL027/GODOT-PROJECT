@@ -7,3 +7,4 @@
 7 - EnemyAttackCollision (Can Cause Damage)
 8 - Observation
 9 - AttackRange
+10 - Friendly Enemy

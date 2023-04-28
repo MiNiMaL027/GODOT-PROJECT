@@ -8,7 +8,7 @@
     <Content Include="content\Layer.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Scripts\Characters\BigSlime\" />
+    <Folder Include="Content\Scripts\Characters\Slime\BigSlime\" />
     <Folder Include="Content\Scripts\Interfaces\" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 ﻿using Godot;
 using GodotProject.Content.Scripts.Characters.CharacterComponents;
+using GodotProject.Content.Scripts.Characters.CharacterComponents.UI;
 using GodotProject.Content.Scripts.Characters.CharacterComponents.UI.Interfaces;
 using GodotProject.Content.Scripts.Controllers;
 
@@ -80,6 +81,9 @@ public partial class HealthComponent : Node
     {
         MaxHp += hp;
         HUDWidget.Refresh(CurrentHp, MaxHp, DefenseComponent.Defense);
+
+        if (HUDWidget is UI_MonsterHUD hud)
+            hud.Visible = false;
     }
 
     public void SubtractionHp(int hp)
@@ -100,6 +104,9 @@ public partial class HealthComponent : Node
         HUDWidget = widget;
         HUDWidget.Refresh(CurrentHp, MaxHp, DefenseComponent.Defense);
         Controller = Owner;
+
+        if(HUDWidget is UI_MonsterHUD hud)
+            hud.Visible = false;
     }
 }
 

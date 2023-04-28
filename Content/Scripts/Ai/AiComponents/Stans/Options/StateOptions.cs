@@ -1,6 +1,7 @@
 ﻿using Godot;
 using GodotProject.Content.Scripts.Controllers;
 using GodotProject.Content.Scripts.enums;
+using System;
 
 namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.Options
 {
@@ -44,6 +45,28 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.Options
             {
                 Owner.AiBody2D.MoveDirection = MoveDirection.Left;
             }
+        }
+
+        public static void ChoseDirectionRetailivelyFromPlayerReverse(AiController Owner)
+        {
+            if (Owner.AiBody2D.ObservationComponent.PawnEnemy.GlobalPosition.X >= Owner.AiBody2D.GlobalPosition.X)
+            {
+                Owner.AiBody2D.MoveDirection = MoveDirection.Left;
+            }
+            else
+            {
+                Owner.AiBody2D.MoveDirection = MoveDirection.Right; 
+            }
+        }
+
+        public static void ChoseDirectionRandom(AiController Owner)
+        {
+            Random rnd = new Random();
+            var i = rnd.Next(2);
+            if(i == 0)
+                Owner.AiBody2D.MoveDirection = MoveDirection.Left;
+            else
+                Owner.AiBody2D.MoveDirection = MoveDirection.Left;
         }
     }
 }

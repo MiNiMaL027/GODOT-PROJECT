@@ -28,7 +28,7 @@ public partial class SlimePawn : AiPawn
         HealthComponent.Init(GetNode<UI_MonsterHUD>("MonsterHpWidget"), Controller);
     }
 
-    public void FlipCharacter(float velocity)
+    public override void FlipCharacter(float velocity)
     {
         if (velocity > 0)
         {

@@ -12,11 +12,13 @@ namespace GodotProject.Content.Scripts.Characters.CharacterComponents.UI
 
         public override void _Ready()
         {
+            Visible = false;
             HpContainer = GetNode<HBoxContainer>("HpContainer");
         }
 
         public void Refresh(int currentHp, int maxHp, int armor)
         {
+            Visible = true;
             maxHp -= currentHp;
             RemoveAllChildHp();
 
