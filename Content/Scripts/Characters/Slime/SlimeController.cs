@@ -43,7 +43,7 @@ public partial class SlimeController : AiController
         }
     }
 
-    private void ChooseDirection()
+    public void ChooseDirection()
     {
         var rnd = new Random();
         var direction = rnd.Next(0,3);
@@ -74,7 +74,7 @@ public partial class SlimeController : AiController
 
     #region CallMethod
 
-    public void Dead()
+    public virtual void Dead()
     {
         this.QueueFree();
     }

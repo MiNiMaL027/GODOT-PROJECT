@@ -78,7 +78,7 @@ public partial class HealthComponent : Node
 
     public void AddHp(int hp)
     {
-        _maxHp += hp;
+        MaxHp += hp;
         HUDWidget.Refresh(CurrentHp, MaxHp, DefenseComponent.Defense);
     }
 

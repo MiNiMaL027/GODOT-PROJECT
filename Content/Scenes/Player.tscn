@@ -514,8 +514,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qes81"]
-radius = 3.63588e-06
-height = 7.27177e-06
+radius = 15.1194
+height = 36.495
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pxfqv"]
 radius = 1.7305
@@ -567,8 +567,8 @@ collision_mask = 16
 script = ExtResource("4_j4865")
 
 [node name="AttackCollision" type="CollisionShape2D" parent="Player/DamageArea"]
-position = Vector2(1, -11)
-rotation = 1.5708
+position = Vector2(16, -4)
+rotation = 1.39626
 shape = SubResource("CapsuleShape2D_qes81")
 disabled = true
 debug_color = Color(0.992157, 0, 0.231373, 0.419608)

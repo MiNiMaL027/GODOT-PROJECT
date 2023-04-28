@@ -29,9 +29,9 @@ public partial class PlayerController : Controller
 
         AccelerationSpeed.Timeout += IncreaseAccelerationSpeed;
 
-        FirstAttack = new AttackTransform() { Transform = new Vector2(15.30f, 34.53f), Rotation = 80f, Position = new Vector2(12f, -8f) };
+        FirstAttack = new AttackTransform() { Transform = new Vector2(15.30f, 39.53f), Rotation = 80f, Position = new Vector2(12f, -8f) };
         SecondAttack = new AttackTransform() { Transform = new Vector2(9.19f, 54.41f), Rotation = 90f, Position = new Vector2(1f, -11f) };
-        RunAttack = new AttackTransform() { Transform = new Vector2(16.45f, 38.81f), Rotation = 80f, Position = new Vector2(18f, -2f) };       
+        RunAttack = new AttackTransform() { Transform = new Vector2(16.45f, 40.81f), Rotation = 80f, Position = new Vector2(18f, -2f) };       
     }
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -66,7 +66,7 @@ public partial class PlayerController : Controller
 
                 CharacterBody.MoveAndSlide();
             }
-        }
+        }      
     }
 
     public void MoveAndAnim(Vector2 direction, Vector2 velocity)
@@ -136,13 +136,16 @@ public partial class PlayerController : Controller
                 velocity.X = direction.X * _currentSpeed;
 
                 CharacterBody.FlipCharacter(velocity);
+
                 if(_currentSpeed == _startSpeed)
                     Animation.SpeedScale = (_currentSpeed / Speed) / 2 + 0.1f;
+
                 Animation.Play(_animRun);
             }
             else if (!RayCast.IsColliding())
             {
                 Animation.Play(_animJump);
+
                 _currentSpeed = _startSpeed;
             }
             else if(direction.X == 0 && RayCast.IsColliding())
