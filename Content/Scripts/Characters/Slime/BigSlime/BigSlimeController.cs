@@ -1,7 +1,6 @@
 using Godot;
 using GodotProject.Content.Scripts.Ai.AiComponents;
 using GodotProject.Content.Scripts.Player.PlayerComponent;
-using System;
 
 public partial class BigSlimeController : SlimeController
 {
@@ -15,8 +14,8 @@ public partial class BigSlimeController : SlimeController
         AiBody2D = GetNode<SlimePawn>("AiBody");
         Animation = GetNode<AnimationPlayer>("AiBody/Animation");
         WalkDuration = GetNode<Timer>("AiBody/WalkDuration");
-        StanController = new StateController<SlimeController>(this);
-        StanController.SetCurrentState(Rest);
+        StateController = new StateController<SlimeController>(this);
+        StateController.SetCurrentState(Rest);
         WalkDuration.Timeout += ChooseDirection;
 
         Animation.SpeedScale = 0.8f;

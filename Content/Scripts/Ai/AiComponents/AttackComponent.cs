@@ -1,113 +1,94 @@
 using Godot;
 using GodotProject.Content.Scripts.Characters;
+using GodotProject.Content.Scripts.Controllers;
 using GodotProject.Content.Scripts.enums;
 
-public partial class AttackComponent : Area2D
+namespace GodotProject.Content.Scripts.Ai.AiComponents
 {
-    public AiPawn Pawn { get; set; }
-    public Timer BackToNormalTimer { get; set; }
-    public bool IsSlide { get; set; }
-    public bool VictimOut { get; set; } = true;
-    public string _animAttack {get; set;}
-
-    public override void _PhysicsProcess(double delta)
+    public partial class AttackComponent : Area2D
     {
-        if(IsSlide)
+        public AiAggresivePawn Pawn { get; set; }
+        public Timer BackToNormalTimer { get; set; }
+        public bool IsSlide { get; set; }
+        public bool VictimOut { get; set; } = true;
+
+        public override void _PhysicsProcess(double delta)
         {
-            Pawn.MoveAndSlide();
+            if (IsSlide)
+            {
+                Pawn.MoveAndSlide();
+            }
+
+            if (Pawn.isHurt)
+            {
+                Pawn.Controller.isAttack = false;
+            }
         }
 
-        if (Pawn.isHurt)
+        public void Init(AiAggresivePawn pawn)
         {
-            Pawn.Controller.isAttack = false;
+            Pawn = pawn;
+            this.BodyEntered += Attack;
+            this.BodyExited += StopAttack;
+
+            BackToNormalTimer = new Timer();
+            BackToNormalTimer.WaitTime = Pawn.BackToNormalTime;
+            BackToNormalTimer.OneShot = true;
+            BackToNormalTimer.Autostart = false;
+            AddChild(BackToNormalTimer);
+            BackToNormalTimer.Timeout += EndSlide;
         }
-    }
 
-    public void Init(AiPawn pawn)
-    {
-        Pawn = pawn;
-        this.BodyEntered += Attack;
-        this.BodyExited += StopAttack;
-
-        BackToNormalTimer = new Timer();
-        BackToNormalTimer.WaitTime = Pawn.BackToNormalTime;
-        BackToNormalTimer.OneShot = true;
-        BackToNormalTimer.Autostart = false;
-        AddChild(BackToNormalTimer);
-        BackToNormalTimer.Timeout += EndSlide;
-    }
-
-    public void Attack(Node2D victim)
-    {
-        if(victim is player)
+        public void Attack(Node2D victim)
         {
-            VictimOut = false;
+            if (victim is player)
+            {
+                VictimOut = false;
 
-            if(!Pawn.isHurt)
+                if (!Pawn.isHurt)
+                    Pawn.Controller.isAttack = true;
+
+                Pawn.ChooseAttack();
+            }
+        }
+
+        public void StopAttack(Node2D victim)
+        {
+            if (victim is player)
+            {
+                VictimOut = true;
+            }
+        }
+
+        public void EndSlide()
+        {
+            IsSlide = false;
+        }
+
+
+        #region CallMethod
+
+        public void FinishAttack()
+        {
+            Pawn.FinishAttack();
+
+            BackToNormalTimer.Start(0);
+
+            IsSlide = true;
+        }
+
+        public void AttackStart()
+        {
+            if (VictimOut || Pawn.HealthComponent.IsDead)
+                Pawn.Controller.isAttack = false;
+            else
+            {
                 Pawn.Controller.isAttack = true;
 
-            ChooseAttack();
-        }
-    }
-
-    public void StopAttack(Node2D victim)
-    {
-        if(victim is player)
-        {
-            VictimOut = true;
-        }
-    }
-
-    public void ChooseAttack()
-    {
-        if (Pawn.ObservationComponent.PawnEnemy.HealthComponent.IsDead || !Pawn.Controller.isAttack)
-            return;
-
-        if(Pawn.ObservationComponent.PawnEnemy.GlobalPosition.Y < Pawn.GlobalPosition.Y - 10)
-        {
-;            _animAttack = "UpAttack";
-            Pawn.DamageArea.ChangeDamageArea(Pawn.Controller.UpAttack);
-        }
-        else
-        {
-            _animAttack = "Attack";
-            Pawn.DamageArea.ChangeDamageArea(Pawn.Controller.Attack);
+                Pawn.ChooseAttack();
+            }
         }
 
-        Pawn.Controller.Animation.Play(_animAttack);
+        #endregion
     }
-
-    public void EndSlide()
-    {
-        IsSlide = false;
-    }
-
-
-    #region CallMethod
-
-    public void FinishAttack()
-    {
-        if (_animAttack == "UpAttack")
-            return;
-        else if (Pawn.MoveDirection == MoveDirection.Right)
-            Pawn.Velocity = new Vector2(-5 * Pawn.Controller.Speed, Pawn.Velocity.Y);
-        else if (Pawn.MoveDirection == MoveDirection.Left)
-            Pawn.Velocity = new Vector2(5 * Pawn.Controller.Speed, Pawn.Velocity.Y);
-
-        BackToNormalTimer.Start(0);
-        IsSlide = true;   
-    }
-
-    public void AttackStart()
-    {      
-        if (VictimOut || Pawn.HealthComponent.IsDead)
-            Pawn.Controller.isAttack = false;
-        else
-        {
-            Pawn.Controller.isAttack = true;
-            ChooseAttack();
-        }                  
-    }
-
-    #endregion
 }

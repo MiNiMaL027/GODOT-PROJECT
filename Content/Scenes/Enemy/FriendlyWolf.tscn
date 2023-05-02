@@ -1,8 +1,8 @@
 [gd_scene load_steps=17 format=3 uid="uid://cnn16q314kq7m"]
 
-[ext_resource type="Script" path="res://Content/Scripts/Characters/Wolf/WolfController.cs" id="1_ns0i7"]
+[ext_resource type="Script" path="res://Content/Scripts/Characters/Wolf/FliendlyWolf/FriendlyWolfController.cs" id="1_bkm5a"]
 [ext_resource type="Texture2D" uid="uid://cdoaa3snwsav0" path="res://Content/Components/Monsters/Wolf/Canine_White_Full_FX.png" id="1_y26yr"]
-[ext_resource type="Script" path="res://Content/Scripts/Characters/Wolf/WolfPawn.cs" id="2_db4j5"]
+[ext_resource type="Script" path="res://Content/Scripts/Characters/Wolf/FliendlyWolf/FriendlyWolfPawn.cs" id="2_4j1gi"]
 [ext_resource type="PackedScene" uid="uid://b8a6xeiu28cca" path="res://Content/Scenes/Enemy/monster_hp_widget.tscn" id="2_tk3gw"]
 [ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/UI/UI_MonsterHUD.cs" id="3_g2tof"]
 [ext_resource type="Texture2D" uid="uid://d0tmc1j1c2mmu" path="res://Content/Components/Player/UI/Items/Heart.png" id="4_mgu54"]
@@ -10,6 +10,65 @@
 [ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/HealthComponent.cs" id="5_cnaoa"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gh7pc"]
+
+[sub_resource type="Animation" id="Animation_hov7m"]
+resource_name = "Dead"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WolfSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [21, 22, 23, 24, 25, 26, 27, 28, 29]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Dead"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_wbaco"]
+resource_name = "Hurt"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WolfSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [17, 18, 19, 20]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Hurt"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_0n7mr"]
 resource_name = "Idle"
@@ -60,51 +119,6 @@ tracks/0/keys = {
 "values": [11, 12, 13, 14, 15, 16]
 }
 
-[sub_resource type="Animation" id="Animation_hov7m"]
-resource_name = "Dead"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("WolfSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [21, 22, 23, 24, 25, 26, 27, 28, 29]
-}
-
-[sub_resource type="Animation" id="Animation_wbaco"]
-resource_name = "Hurt"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("WolfSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [17, 18, 19, 20]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("..")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.3),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"Hurt"
-}]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rilw2"]
 _data = {
 "Dead": SubResource("Animation_hov7m"),
@@ -118,12 +132,12 @@ _data = {
 radius = 11.0
 height = 32.0
 
-[node name="WolfController" type="Node2D"]
-script = ExtResource("1_ns0i7")
+[node name="FriendlyWolfController" type="Node2D"]
+script = ExtResource("1_bkm5a")
 
 [node name="WolfBody" type="CharacterBody2D" parent="."]
 collision_layer = 512
-script = ExtResource("2_db4j5")
+script = ExtResource("2_4j1gi")
 
 [node name="PhisicCollision" type="CollisionShape2D" parent="WolfBody"]
 position = Vector2(-2, 6)

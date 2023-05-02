@@ -12,7 +12,7 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.SlimeStans
         public override void Execute(SlimeController Owner)
         {
             if (Owner.AiBody2D.ObservationComponent.PawnEnemy.HealthComponent.IsDead)
-                Owner.StanController.ChangeState(Owner.Idle);
+                Owner.StateController.ChangeState(Owner.Idle);
             StateOptions.ChoseDirectionRetailivelyFromPlayer(Owner);
             StateOptions.MovePawn(Owner);
         }

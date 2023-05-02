@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://bcyq6n2sysnhh" path="res://Content/Components/Sounds/GameSound/Slime/SlimeDead.mp3" id="5_teh6h"]
 [ext_resource type="AudioStream" uid="uid://vv31atkvqw0f" path="res://Content/Components/Sounds/GameSound/Slime/SlimeHurt.mp3" id="6_wt27j"]
 [ext_resource type="Texture2D" uid="uid://nq50gpgbrc2t" path="res://Content/Components/Monsters/Slime/Animations/slime-Sheet.png" id="7_cudc0"]
-[ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/ObservationComponent.cs" id="8_ge72r"]
+[ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/ObservationComponent.cs" id="9_5gm45"]
 [ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/AttackComponent.cs" id="9_hlvwt"]
 [ext_resource type="PackedScene" uid="uid://b8a6xeiu28cca" path="res://Content/Scenes/Enemy/monster_hp_widget.tscn" id="10_2a1st"]
 [ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/UI/UI_MonsterHUD.cs" id="11_msw0f"]
@@ -283,10 +283,10 @@ _data = {
 size = Vector2(100, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sn4ie"]
-size = Vector2(100, 20)
+size = Vector2(120, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mrtu4"]
-size = Vector2(57, 24)
+size = Vector2(60, 20)
 
 [node name="BigSlimeController" type="Node2D"]
 script = ExtResource("1_vavym")
@@ -350,7 +350,7 @@ autostart = true
 [node name="ObservationComponent" type="Area2D" parent="AiBody"]
 collision_layer = 128
 collision_mask = 2
-script = ExtResource("8_ge72r")
+script = ExtResource("9_5gm45")
 
 [node name="LeftCollisionShape2D" type="CollisionShape2D" parent="AiBody/ObservationComponent"]
 position = Vector2(-50, -6)
@@ -358,7 +358,7 @@ shape = SubResource("RectangleShape2D_17npj")
 debug_color = Color(0, 0.619608, 0.721569, 0.419608)
 
 [node name="RightCollisionShape2D2" type="CollisionShape2D" parent="AiBody/ObservationComponent"]
-position = Vector2(50, -6)
+position = Vector2(60, -6)
 shape = SubResource("RectangleShape2D_sn4ie")
 debug_color = Color(0, 0.603922, 0.686275, 0.419608)
 
@@ -368,7 +368,7 @@ collision_mask = 2
 script = ExtResource("9_hlvwt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AiBody/AttackComponent"]
-position = Vector2(2, -8)
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_mrtu4")
 debug_color = Color(0.298039, 0.815686, 0, 0.419608)
 

@@ -2,18 +2,17 @@ using Godot;
 using GodotProject.Content.Scripts.Ai.AiComponents;
 using GodotProject.Content.Scripts.Ai.AiComponents.Stans;
 using GodotProject.Content.Scripts.Ai.AiComponents.Stans.SlimeStans;
-using GodotProject.Content.Scripts.Controllers;
+using GodotProject.Content.Scripts.Characters;
+using GodotProject.Content.Scripts.Characters.Wolf;
 using GodotProject.Content.Scripts.Player.PlayerComponent;
 using System;
 using static Godot.TextServer;
 
-public partial class SlimeController : AiController
+public partial class SlimeController : RestController<SlimeController>
 {
-    public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-    public State<SlimeController> Rest { get; set; } = new SlimeRest();
     public State<SlimeController> Aggression { get; set; } = new SlimeAggression();
-    public State<SlimeController> Idle { get; set; } = new SlimeIdle();
-    public StateController<SlimeController> StanController { get; set; }
+
+    public string _animAttack { get; set; }
 
     public override void _Ready()
     {
@@ -21,9 +20,9 @@ public partial class SlimeController : AiController
         Animation = GetNode<AnimationPlayer>("AiBody/Animation");
         WalkDuration = GetNode<Timer>("AiBody/WalkDuration");
         Speed = 10f;
-        StanController = new StateController<SlimeController>(this);
-        StanController.SetCurrentState(Rest);
-        WalkDuration.Timeout += ChooseDirection;
+        StateController = new StateController<SlimeController>(this);
+        StateController.SetCurrentState(Rest);
+
 
         Attack = new AttackTransform() { Transform = new Vector2(11f, 22f), Rotation = 0f, Position = new Vector2(8f, -6f) };
         UpAttack = new AttackTransform() { Transform = new Vector2(7f, 28f), Rotation = 99f, Position = new Vector2(0f, -6f) };
@@ -39,37 +38,18 @@ public partial class SlimeController : AiController
         {
             AiBody2D.Velocity = velocity;
             AiBody2D.MoveAndSlide();
-            StanController.Update();
+            StateController.Update();
         }
     }
 
-    public void ChooseDirection()
+    public override void ChangeState(bool Aggresive = false)
     {
-        var rnd = new Random();
-        var direction = rnd.Next(0,3);
-
-        if(direction > 1)
+        if (isAggresive || Aggresive)
         {
-            AiBody2D.FlipCharacter(1);
-            StanController.ChangeState(Rest);
-        }
-        else if(direction < 1)
-        {
-            AiBody2D.FlipCharacter(-1);
-            StanController.ChangeState(Rest);
-        }
-        else if(direction == 1)
-            StanController.ChangeState(Idle);
-    }
-
-    public override void ChangeState()
-    {
-        if (isAggresive)
-        {
-            StanController.ChangeState(Aggression);
+            StateController.ChangeState(Aggression);
         }
         else
-            StanController.ChangeState(Idle);
+            StateController.ChangeState(Idle);
     }
 
     #region CallMethod

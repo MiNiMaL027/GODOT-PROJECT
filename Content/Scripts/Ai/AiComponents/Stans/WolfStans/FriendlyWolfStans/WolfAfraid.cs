@@ -2,22 +2,22 @@
 using GodotProject.Content.Scripts.Characters.Wolf;
 using System;
 
-namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.WolfStans
+namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.WolfStans.FriendlyWolfStans
 {
-    public class WolfAfraid : State<WolfController>
+    public class WolfAfraid : State<FriendlyWolfController>
     {
-        public override void Enter(WolfController Owner)
+        public override void Enter(FriendlyWolfController Owner)
         {
             Owner.Speed *= 2;
         }
 
-        public override void Execute(WolfController Owner)
+        public override void Execute(FriendlyWolfController Owner)
         {
             StateOptions.ChoseDirectionRandom(Owner);
             StateOptions.MovePawn(Owner);
         }
 
-        public override void Exit(WolfController Owner)
+        public override void Exit(FriendlyWolfController Owner)
         {
             Owner.Speed /= 2;
         }

@@ -8,8 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://vv31atkvqw0f" path="res://Content/Components/Sounds/GameSound/Slime/SlimeHurt.mp3" id="6_7ippy"]
 [ext_resource type="AudioStream" uid="uid://bcyq6n2sysnhh" path="res://Content/Components/Sounds/GameSound/Slime/SlimeDead.mp3" id="6_xgfit"]
 [ext_resource type="Texture2D" uid="uid://nq50gpgbrc2t" path="res://Content/Components/Monsters/Slime/Animations/slime-Sheet.png" id="7_igkd7"]
-[ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/ObservationComponent.cs" id="8_57psx"]
 [ext_resource type="PackedScene" uid="uid://b8a6xeiu28cca" path="res://Content/Scenes/Enemy/monster_hp_widget.tscn" id="9_jjt2m"]
+[ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/ObservationComponent.cs" id="9_uike6"]
 [ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/AttackComponent.cs" id="9_x2go0"]
 [ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/UI/UI_MonsterHUD.cs" id="10_xdbu6"]
 [ext_resource type="Texture2D" uid="uid://dqerspgxirpuf" path="res://Content/Components/Monsters/Slime/SlimeHeard.png" id="13_eg456"]
@@ -348,7 +348,7 @@ autostart = true
 [node name="ObservationComponent" type="Area2D" parent="AiBody"]
 collision_layer = 128
 collision_mask = 2
-script = ExtResource("8_57psx")
+script = ExtResource("9_uike6")
 
 [node name="LeftCollisionShape2D" type="CollisionShape2D" parent="AiBody/ObservationComponent"]
 position = Vector2(-50, -6)

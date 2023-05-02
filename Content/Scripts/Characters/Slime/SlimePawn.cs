@@ -1,15 +1,16 @@
 using Godot;
+using GodotProject.Content.Scripts.Ai.AiComponents;
 using GodotProject.Content.Scripts.Characters;
 using GodotProject.Content.Scripts.Characters.CharacterComponents.UI;
 using GodotProject.Content.Scripts.enums;
 
-public partial class SlimePawn : AiPawn
+public partial class SlimePawn : AiAggresivePawn
 {
     public HitBoxCollision BodyCollision;
-    public Sprite2D Sprite { get; set; }
+    
     public override void _Ready()
     {
-        MemoryTime = 20;
+        MemoryTime = 10;
 
         MoveDirection = MoveDirection.Left;
         Controller = GetParent<SlimeController>();
@@ -28,42 +29,32 @@ public partial class SlimePawn : AiPawn
         HealthComponent.Init(GetNode<UI_MonsterHUD>("MonsterHpWidget"), Controller);
     }
 
-    public override void FlipCharacter(float velocity)
+    public override void ChooseAttack()
     {
-        if (velocity > 0)
+        if (ObservationComponent.PawnEnemy.HealthComponent.IsDead || !Controller.isAttack)
+            return;
+
+        if (ObservationComponent.PawnEnemy.GlobalPosition.Y < GlobalPosition.Y - 10)
         {
-            MoveDirection = MoveDirection.Right;
-            Sprite.FlipH = true;
-            DamageArea.CollisionShape.Position = new Vector2(-DamageArea.StartAreaPosition.X, DamageArea.StartAreaPosition.Y);
-            DamageArea.CollisionShape.Rotation = -DamageArea.StartAreaRotation;
-
-            (ObservationComponent.LeftCollisionShape.Shape as RectangleShape2D).Size = new Vector2(
-                ObservationComponent.CollisionShapeScale.X / 2,
-                ObservationComponent.CollisionShapeScale.Y);
-            ObservationComponent.LeftCollisionShape.Position = new Vector2(
-                -ObservationComponent.CollisionShapePosition.X / 2,
-                ObservationComponent.CollisionShapePosition.Y);
-            (ObservationComponent.RightCollisionShape.Shape as RectangleShape2D).Size = ObservationComponent.CollisionShapeScale;
-            ObservationComponent.RightCollisionShape.Position = ObservationComponent.CollisionShapePosition; 
+            _animAttack = "UpAttack";
+            DamageArea.ChangeDamageArea(Controller.UpAttack);
         }
-        else if(velocity < 0)
+        else
         {
-            MoveDirection = MoveDirection.Left;
-            Sprite.FlipH = false;
-            DamageArea.CollisionShape.Position = new Vector2(DamageArea.StartAreaPosition.X, DamageArea.StartAreaPosition.Y);
-            DamageArea.CollisionShape.Rotation = DamageArea.StartAreaRotation;
-
-
-            (ObservationComponent.RightCollisionShape.Shape as RectangleShape2D).Size = new Vector2(
-                ObservationComponent.CollisionShapeScale.X / 2,
-                ObservationComponent.CollisionShapeScale.Y);
-            ObservationComponent.RightCollisionShape.Position = new Vector2(
-                ObservationComponent.CollisionShapePosition.X / 2,
-                ObservationComponent.CollisionShapePosition.Y);
-            (ObservationComponent.LeftCollisionShape.Shape as RectangleShape2D).Size = ObservationComponent.CollisionShapeScale;
-            ObservationComponent.LeftCollisionShape.Position = new Vector2(
-                -ObservationComponent.CollisionShapePosition.X,
-                ObservationComponent.CollisionShapePosition.Y);
+            _animAttack = "Attack";
+            DamageArea.ChangeDamageArea(Controller.Attack);
         }
+
+        Controller.Animation.Play(_animAttack);
+    }
+
+    public override void FinishAttack()
+    {
+        if (_animAttack == "UpAttack")
+            return;
+        else if (MoveDirection == MoveDirection.Right)
+            Velocity = new Vector2(-5 * Controller.Speed, Velocity.Y);
+        else if (MoveDirection == MoveDirection.Left)
+            Velocity = new Vector2(5 * Controller.Speed, Velocity.Y);
     }
 }
