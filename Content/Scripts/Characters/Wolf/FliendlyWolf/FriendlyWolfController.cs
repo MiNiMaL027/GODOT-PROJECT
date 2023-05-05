@@ -7,7 +7,7 @@ using GodotProject.Content.Scripts.Ai.AiComponents.Stans;
 namespace GodotProject.Content.Scripts.Characters.Wolf
 {
     public partial class FriendlyWolfController : RestController<FriendlyWolfController>
-    { 
+    {
         public Timer AfraidDuration { get; set; }
 
         public State<FriendlyWolfController> Afraid = new WolfAfraid();
@@ -19,9 +19,12 @@ namespace GodotProject.Content.Scripts.Characters.Wolf
             Animation = GetNode<AnimationPlayer>("WolfBody/Animation");
             WalkDuration = GetNode<Timer>("WolfBody/WalkDuration");
 
-            Speed = 30f;
             StateController = new StateController<FriendlyWolfController>(this);
-            StateController.SetCurrentState(Rest);
+            StateController.SetCurrentState(Idle);
+
+            WalkDuration.Timeout += ChooseDirection;
+
+            Speed = 30f;          
         }
 
         public override void _PhysicsProcess(double delta)
@@ -30,15 +33,19 @@ namespace GodotProject.Content.Scripts.Characters.Wolf
             if (!AiBody2D.IsOnFloor())
                 velocity.Y += gravity * (float)delta;
 
+            if (!AiBody2D.isHurt) 
+            {
                 AiBody2D.Velocity = velocity;
                 AiBody2D.MoveAndSlide();
                 StateController.Update();
+            }
         }
 
         public override void ChangeState(bool Aggresive = false)
         {
             if (isAggresive || Aggresive)
             {
+                GD.Print("Change");
                 StateController.ChangeState(Afraid);
             }
             else
@@ -59,7 +66,7 @@ namespace GodotProject.Content.Scripts.Characters.Wolf
             WalkDuration.Stop();
             isAggresive = true;
             AfraidDuration.Start(0);
-            ChangeState();
+            ChangeState(true);
             AiBody2D.isHurt = false;
         }
 

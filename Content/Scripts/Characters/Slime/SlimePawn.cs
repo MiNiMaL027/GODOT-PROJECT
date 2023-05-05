@@ -15,6 +15,9 @@ public partial class SlimePawn : AiAggresivePawn
         MoveDirection = MoveDirection.Left;
         Controller = GetParent<SlimeController>();
         Sprite = GetNode<Sprite2D>("SlimeSprite");
+        Audio = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+
+        WalkSound = GD.Load<AudioStreamMP3>("res://Content/Components/Sounds/GameSound/Slime/SlimeWalk.mp3");
 
         BodyCollision = GetNode<HitBoxCollision>("Body");
         BodyCollision.Init(this);

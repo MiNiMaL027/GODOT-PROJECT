@@ -7,7 +7,6 @@ namespace GodotProject.Content.Scripts.Controllers
     public abstract partial class AiController : Controller
     {
         public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-        public bool isAttack { get; set; }
         new public float Speed { get; set; }
         public bool isAggresive { get; set; }
         public bool isAttaker { get; set; }

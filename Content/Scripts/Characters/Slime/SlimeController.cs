@@ -21,8 +21,9 @@ public partial class SlimeController : RestController<SlimeController>
         WalkDuration = GetNode<Timer>("AiBody/WalkDuration");
         Speed = 10f;
         StateController = new StateController<SlimeController>(this);
-        StateController.SetCurrentState(Rest);
+        StateController.SetCurrentState(Idle);
 
+        WalkDuration.Timeout += ChooseDirection;
 
         Attack = new AttackTransform() { Transform = new Vector2(11f, 22f), Rotation = 0f, Position = new Vector2(8f, -6f) };
         UpAttack = new AttackTransform() { Transform = new Vector2(7f, 28f), Rotation = 99f, Position = new Vector2(0f, -6f) };

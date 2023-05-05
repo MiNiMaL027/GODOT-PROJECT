@@ -17,7 +17,10 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.WolfStans.NeutralWo
         public override void Execute(NeutralWolfController Owner)
         {
             if (Owner.AiBody2D.ObservationComponent.PawnEnemy.HealthComponent.IsDead)
+            {
                 Owner.StateController.ChangeState(Owner.Idle);
+            }
+
             StateOptions.ChoseDirectionRetailivelyFromPlayer(Owner);
             StateOptions.MovePawn(Owner);
         }
@@ -25,9 +28,10 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.WolfStans.NeutralWo
         public override void Exit(NeutralWolfController Owner)
         {
             Owner.Speed /= 2;
+            Owner.AiBody2D.CollisionLayer = 10;
             Owner.AiBody2D.AttackRangeComponent.GetChild<CollisionShape2D>(0).Disabled = true;
-            Owner.isAttaker = false;
             Owner.AiBody2D.ObservationComponent.СhangeMemoryTime(Owner.AiBody2D.MemoryTime);
+            Owner.isAttaker = false;
         }
     }
 }

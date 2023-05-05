@@ -15,8 +15,11 @@ namespace GodotProject.Content.Scripts.Characters.Wolf.NeutralWolf
             MoveDirection = MoveDirection.Left;
             Controller = GetParent<NeutralWolfController>();
             Sprite = GetNode<Sprite2D>("WolfSprite");
-            MemoryTime = 2;
+            Audio = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+            MemoryTime = 4;
             BackToNormalTime = 0.5f;
+
+            WalkSound = GD.Load<AudioStreamMP3>("res://Content/Components/Sounds/GameSound/Wolf/WolfWalk.mp3");
 
             BodyCollision = GetNode<HitBoxCollision>("Body");
             BodyCollision.Init(this);

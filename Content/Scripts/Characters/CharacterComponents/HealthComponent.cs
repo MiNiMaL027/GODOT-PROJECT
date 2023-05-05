@@ -63,6 +63,8 @@ public partial class HealthComponent : Node
         }         
         else
            Controller.Animation.Play("Hurt");
+
+        Controller.isAttack = false;
   
         HUDWidget.Refresh(CurrentHp, MaxHp, DefenseComponent.Defense);
     }

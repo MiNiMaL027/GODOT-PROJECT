@@ -1,0 +1,88 @@
+[gd_scene load_steps=13 format=3 uid="uid://ty3e24tmfd7u"]
+
+[ext_resource type="PackedScene" uid="uid://b8a6xeiu28cca" path="res://Content/Scenes/Enemy/monster_hp_widget.tscn" id="1_ibpdi"]
+[ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/UI/UI_MonsterHUD.cs" id="2_c4ie3"]
+[ext_resource type="Texture2D" uid="uid://dqerspgxirpuf" path="res://Content/Components/Monsters/Slime/SlimeHeard.png" id="3_avhtc"]
+[ext_resource type="Script" path="res://Content/Scripts/GameComponents/DamageArea.cs" id="4_gvk0p"]
+[ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/ObservationComponent.cs" id="5_8n5ep"]
+[ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/AttackComponent.cs" id="6_0qngy"]
+[ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/HealthComponent.cs" id="7_3iupn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tksoe"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jj7h1"]
+radius = 7.0
+height = 26.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y7rak"]
+size = Vector2(100, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_emr73"]
+size = Vector2(120, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_72ada"]
+size = Vector2(60, 20)
+
+[node name="LeafController" type="Node2D"]
+
+[node name="LeafBody" type="CharacterBody2D" parent="."]
+
+[node name="PhisicCollision" type="CollisionShape2D" parent="LeafBody"]
+shape = SubResource("CapsuleShape2D_tksoe")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LeafBody"]
+
+[node name="LeafSprite" type="Sprite2D" parent="LeafBody"]
+
+[node name="MonsterHpWidget" parent="LeafBody" instance=ExtResource("1_ibpdi")]
+offset_top = -25.0
+offset_bottom = -25.0
+script = ExtResource("2_c4ie3")
+Hp = ExtResource("3_avhtc")
+
+[node name="DamageArea" type="Area2D" parent="LeafBody"]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("4_gvk0p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeafBody/DamageArea"]
+visible = false
+position = Vector2(16, -7)
+shape = SubResource("CapsuleShape2D_jj7h1")
+disabled = true
+debug_color = Color(0.992157, 0, 0.227451, 0.419608)
+
+[node name="ObservationComponent" type="Area2D" parent="LeafBody"]
+collision_layer = 128
+collision_mask = 2
+script = ExtResource("5_8n5ep")
+
+[node name="LeftCollisionShape2D" type="CollisionShape2D" parent="LeafBody/ObservationComponent"]
+position = Vector2(-50, -6)
+shape = SubResource("RectangleShape2D_y7rak")
+debug_color = Color(0, 0.619608, 0.721569, 0.419608)
+
+[node name="RightCollisionShape2D2" type="CollisionShape2D" parent="LeafBody/ObservationComponent"]
+position = Vector2(60, -6)
+shape = SubResource("RectangleShape2D_emr73")
+debug_color = Color(0, 0.603922, 0.686275, 0.419608)
+
+[node name="AttackComponent" type="Area2D" parent="LeafBody"]
+collision_layer = 256
+collision_mask = 2
+script = ExtResource("6_0qngy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeafBody/AttackComponent"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_72ada")
+debug_color = Color(0.298039, 0.815686, 0, 0.419608)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="LeafBody"]
+max_distance = 250.0
+
+[node name="HealthComponent" type="Node" parent="LeafBody"]
+script = ExtResource("7_3iupn")
+
+[node name="WalkDuration" type="Timer" parent="LeafBody"]
+wait_time = 10.0
+autostart = true

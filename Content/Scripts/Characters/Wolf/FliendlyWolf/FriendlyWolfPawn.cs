@@ -7,13 +7,16 @@ namespace GodotProject.Content.Scripts.Characters.Wolf
     public partial class FriendlyWolfPawn : AiPawn
     {
         public HitBoxCollision BodyCollision;
-        public UI_MonsterHUD Widget { get; set; }
+        public UI_MonsterHUD Widget { get; set; }     
 
         public override void _Ready()
         {
             MoveDirection = MoveDirection.Left;
             Controller = GetParent<FriendlyWolfController>();
             Sprite = GetNode<Sprite2D>("WolfSprite");
+            Audio = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+
+            WalkSound = GD.Load<AudioStreamMP3>("res://Content/Components/Sounds/GameSound/Wolf/WolfWalk.mp3");
 
             BodyCollision = GetNode<HitBoxCollision>("Body");
             BodyCollision.Init(this);

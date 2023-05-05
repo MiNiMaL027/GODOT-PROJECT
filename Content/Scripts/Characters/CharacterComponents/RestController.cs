@@ -13,12 +13,6 @@ namespace GodotProject.Content.Scripts.Characters.Wolf
         public State<T> Idle { get; set; } = new Idle<T>();
         public StateController<T> StateController { get; set; } 
 
-        public override void _Ready()
-        {
-            StateController.SetCurrentState(Rest);
-            WalkDuration.Timeout += ChooseDirection;         
-        }
-
         public void ChooseDirection()
         {
             var rnd = new Random();

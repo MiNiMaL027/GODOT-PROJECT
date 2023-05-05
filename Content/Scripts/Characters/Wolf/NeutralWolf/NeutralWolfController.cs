@@ -12,14 +12,15 @@ namespace GodotProject.Content.Scripts.Characters.Wolf.NeutralWolf
         public State<NeutralWolfController> Wary { get; set; } = new WolfWary();
 
         public override void _Ready()
-        {
-            
+        {           
             AiBody2D = GetNode<NeutralWolfPawn>("WolfBody");
             Animation = GetNode<AnimationPlayer>("WolfBody/Animation");
             WalkDuration = GetNode<Timer>("WolfBody/WalkDuration");
             Speed = 30f;
             StateController = new StateController<NeutralWolfController>(this);
-            StateController.SetCurrentState(Rest);
+            StateController.SetCurrentState(Idle);
+
+            WalkDuration.Timeout += ChooseDirection;
 
             Attack = new AttackTransform() { Transform = new Vector2(7f, 26f), Rotation = 0f, Position = new Vector2(18f, -7f) };
         }
@@ -44,7 +45,9 @@ namespace GodotProject.Content.Scripts.Characters.Wolf.NeutralWolf
                 StateController.ChangeState(Aggression);
 
             else if (isAggresive)
+            {
                 StateController.ChangeState(Wary);
+            }
 
             else
                 StateController.ChangeState(Rest);

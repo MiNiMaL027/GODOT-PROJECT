@@ -377,3 +377,4 @@ script = ExtResource("10_xdbu6")
 Hp = ExtResource("13_eg456")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="AiBody"]
+max_distance = 200.0

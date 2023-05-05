@@ -1,16 +1,19 @@
-[gd_scene load_steps=25 format=3 uid="uid://jus0tr1edy53"]
+[gd_scene load_steps=28 format=3 uid="uid://jus0tr1edy53"]
 
 [ext_resource type="Script" path="res://Content/Scripts/Characters/Wolf/NeutralWolf/NeutralWolfController.cs" id="1_wcjjc"]
 [ext_resource type="Texture2D" uid="uid://dujea6u434qf7" path="res://Content/Components/Monsters/Wolf/Canine_Gray_Full.png" id="2_2n5e1"]
 [ext_resource type="Script" path="res://Content/Scripts/Characters/Wolf/NeutralWolf/NeutralWolfPawn.cs" id="2_yoqqy"]
 [ext_resource type="Script" path="res://Content/Scripts/GameComponents/HitBoxCollision.cs" id="3_4oi3d"]
 [ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/HealthComponent.cs" id="4_8ol8p"]
+[ext_resource type="AudioStream" uid="uid://cr2m6gi4a4u0s" path="res://Content/Components/Sounds/GameSound/Wolf/WolfDead.wav" id="4_vajec"]
 [ext_resource type="PackedScene" uid="uid://b8a6xeiu28cca" path="res://Content/Scenes/Enemy/monster_hp_widget.tscn" id="5_8ju5m"]
+[ext_resource type="AudioStream" uid="uid://baohp5vyqju5t" path="res://Content/Components/Sounds/GameSound/Wolf/WolfHurt.wav" id="5_pilax"]
 [ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/UI/UI_MonsterHUD.cs" id="6_81e52"]
 [ext_resource type="Texture2D" uid="uid://d0tmc1j1c2mmu" path="res://Content/Components/Player/UI/Items/Heart.png" id="7_noypv"]
 [ext_resource type="Script" path="res://Content/Scripts/GameComponents/DamageArea.cs" id="8_l1yjs"]
 [ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/AttackComponent.cs" id="10_n872l"]
 [ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/ObservationComponent.cs" id="10_sxdcf"]
+[ext_resource type="AudioStream" uid="uid://66dxqf5s427m" path="res://Content/Components/Sounds/GameSound/Wolf/WolfWary.mp3" id="15_pf7sj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_al2fk"]
 
@@ -93,6 +96,21 @@ tracks/1/keys = {
 "method": &"Dead"
 }]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.98,
+"start_offset": 2.78,
+"stream": ExtResource("4_vajec")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_wbaco"]
 resource_name = "Hurt"
@@ -123,6 +141,21 @@ tracks/1/keys = {
 "method": &"Endhurt"
 }]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.53972,
+"start_offset": 0.69206,
+"stream": ExtResource("5_pilax")
+}],
+"times": PackedFloat32Array(-0.00859581)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_0n7mr"]
 resource_name = "Idle"
@@ -240,7 +273,7 @@ shape = SubResource("CapsuleShape2D_w8gq2")
 script = ExtResource("4_8ol8p")
 
 [node name="WalkDuration" type="Timer" parent="WolfBody"]
-wait_time = 10.0
+wait_time = 5.0
 autostart = true
 
 [node name="MonsterHpWidget" parent="WolfBody" instance=ExtResource("5_8ju5m")]
@@ -285,3 +318,7 @@ position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_eqpoo")
 disabled = true
 debug_color = Color(0.298039, 0.815686, 0, 0.419608)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="WolfBody"]
+stream = ExtResource("15_pf7sj")
+max_distance = 300.0

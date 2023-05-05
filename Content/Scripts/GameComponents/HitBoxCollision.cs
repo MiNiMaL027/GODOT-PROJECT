@@ -26,20 +26,4 @@ public partial class HitBoxCollision : Area2D
         else
             HitBoxOwner.HealthComponent.TakeDamage(damage: damage);
     }
-
-    //public void DisableHitBox()
-    //{
-    //    for (int i = 0; i < HitBoxOwner.EnteredHitBoxs.Count - 1; i++)
-    //    {
-    //        HitBoxOwner.EnteredHitBoxs[i].CollisionShape.Disabled = true;
-    //    }
-    //}
-
-    //public void EnableHitBox()
-    //{
-    //    for (int i = 0; i < HitBoxOwner.EnteredHitBoxs.Count - 1; i++)
-    //    {
-    //        HitBoxOwner.EnteredHitBoxs[i].CollisionShape.Disabled = false;
-    //    }
-    //}
 }

@@ -1,3 +1,4 @@
+using Godot;
 using GodotProject.Content.Scripts.Ai.AiComponents.Stans;
 
 namespace GodotProject.Content.Scripts.Ai.AiComponents

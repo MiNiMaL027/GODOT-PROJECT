@@ -1,6 +1,7 @@
 ﻿using Godot;
 using GodotProject.Content.Scripts.Ai.AiComponents.Stans.Options;
 using GodotProject.Content.Scripts.Characters.Wolf.NeutralWolf;
+using System.IO;
 
 namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.WolfStans.NeutralWolfStans
 {
@@ -10,6 +11,9 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.WolfStans.NeutralWo
         {
             Owner.Animation.Play("Idle");
             Owner.AiBody2D.Velocity = new Vector2(0f, Owner.AiBody2D.Velocity.Y);
+            var sound = GD.Load<AudioStreamMP3>("res://Content/Components/Sounds/GameSound/Wolf/WolfWary.mp3");
+            Owner.AiBody2D.Audio.Stream = sound;
+            Owner.AiBody2D.Audio.Play();
         }
 
         public override void Execute(NeutralWolfController Owner)
@@ -23,7 +27,7 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.WolfStans.NeutralWo
 
         public override void Exit(NeutralWolfController Owner)
         {
-            
+          
         }
     }
 }

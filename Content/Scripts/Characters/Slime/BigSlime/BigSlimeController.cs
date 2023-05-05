@@ -14,6 +14,7 @@ public partial class BigSlimeController : SlimeController
         AiBody2D = GetNode<SlimePawn>("AiBody");
         Animation = GetNode<AnimationPlayer>("AiBody/Animation");
         WalkDuration = GetNode<Timer>("AiBody/WalkDuration");
+
         StateController = new StateController<SlimeController>(this);
         StateController.SetCurrentState(Rest);
         WalkDuration.Timeout += ChooseDirection;

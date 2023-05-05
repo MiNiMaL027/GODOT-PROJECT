@@ -42,22 +42,30 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents
         {
             if (area is player player)
             {
-                MemoryTimer.Stop();
-
                 PawnEnemy = player;
 
                 AiOwner.Controller.WalkDuration.Stop();
 
                 AiOwner.Controller.isAggresive = true;
 
-                AiOwner.Controller.ChangeState();
+                if (MemoryTimer.TimeLeft != 0)
+                {
+                    MemoryTimer.Stop();
+                    AiOwner.Controller.ChangeState(true);
+                }
+                else
+                {
+                    MemoryTimer.Stop();
+
+                    AiOwner.Controller.ChangeState();
+                }
             }
         }
 
         public void LostEnemy(Node2D area)
         {
             if (area is player && !AiOwner.HealthComponent.IsDead)
-                MemoryTimer.Start(0);
+                MemoryTimer.Start();
         }
 
         public void ForgetEnemy()

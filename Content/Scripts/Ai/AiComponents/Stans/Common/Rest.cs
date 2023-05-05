@@ -1,6 +1,6 @@
-﻿using GodotProject.Content.Scripts.Ai.AiComponents.Stans.Options;
+﻿using Godot;
+using GodotProject.Content.Scripts.Ai.AiComponents.Stans.Options;
 using GodotProject.Content.Scripts.Characters.Wolf;
-using GodotProject.Content.Scripts.Controllers;
 
 namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.Common
 {
@@ -8,7 +8,11 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.Common
     {
         public override void Enter(T Owner)
         {
-            
+            if (Owner is RestController<T> _Owner)
+            {
+                _Owner.AiBody2D.Audio.Stream = _Owner.AiBody2D.WalkSound;
+                _Owner.AiBody2D.Audio.Play();
+            }
         }
 
         public override void Execute(T Owner)
@@ -22,7 +26,10 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents.Stans.Common
 
         public override void Exit(T Owner)
         {
-            
+            if (Owner is RestController<T> _Owner)
+            {              
+                _Owner.AiBody2D.Audio.Stop();
+            }
         }
     }
 }

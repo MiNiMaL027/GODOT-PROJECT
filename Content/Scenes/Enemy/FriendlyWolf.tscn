@@ -62,7 +62,7 @@ tracks/1/path = NodePath("..")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0.4),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -182,3 +182,6 @@ Hp = ExtResource("4_mgu54")
 [node name="AfraidDuration" type="Timer" parent="WolfBody"]
 wait_time = 20.0
 one_shot = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="WolfBody"]
+max_distance = 300.0

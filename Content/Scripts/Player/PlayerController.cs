@@ -16,7 +16,6 @@ public partial class PlayerController : Controller
 	public AttackTransform RunAttack;
 	public bool IsCrouch;
 	public bool IsJump;
-	public bool IsAttack;
 	public bool IsSecondAttack;
 	public bool IsSlide;
 
@@ -56,10 +55,10 @@ public partial class PlayerController : Controller
 			if (!IsSlide)
 				Attack(direction, velocity);
 
-			if (!IsAttack)
+			if (!isAttack)
 				MoveAndAnim(direction, velocity);
 
-			if (IsAttack && !RayCast.IsColliding() && _animAttack == "Attack(Run)")
+			if (isAttack && !RayCast.IsColliding() && _animAttack == "Attack(Run)")
 			{
 				Animation.SpeedScale = 0.3f;
 				CharacterBody.Velocity = velocity;
@@ -167,7 +166,7 @@ public partial class PlayerController : Controller
 		if (Input.IsActionJustPressed("Attack"))
 		{
 			CharacterBody.DamageArea.CollisionShape.Disabled = true;
-			if (direction.X != 0 && !IsAttack && _currentSpeed >= _startSpeed * 1.3f || !RayCast.IsColliding())
+			if (direction.X != 0 && !isAttack && _currentSpeed >= _startSpeed * 1.3f || !RayCast.IsColliding())
 			{
 				_animAttack = "Attack(Run)";              
 			}
@@ -183,7 +182,7 @@ public partial class PlayerController : Controller
 		{
 			if (_animAttack == "Attack(Idle)")
 			{
-				if (!IsAttack)
+				if (!isAttack)
 					CharacterBody.FlipCharacter(velocity);             
 
 				velocity.X = direction.X * _startSpeed/3;
@@ -191,7 +190,7 @@ public partial class PlayerController : Controller
 			else
 				velocity.X = Mathf.MoveToward(CharacterBody.Velocity.X, 0, _currentSpeed);
 
-			IsAttack = true;
+			isAttack = true;
 			Animation.Play(_animAttack);
 
 			if(!IsJump)
@@ -204,7 +203,7 @@ public partial class PlayerController : Controller
 	
 	private void IncreaseAccelerationSpeed()
 	{
-		if (_currentSpeed <= Speed && !IsCrouch && !IsAttack && !CharacterBody.isHurt)
+		if (_currentSpeed <= Speed && !IsCrouch && !isAttack && !CharacterBody.isHurt)
 		{
 			_currentSpeed += 2;
 		}
@@ -229,7 +228,7 @@ public partial class PlayerController : Controller
 		_animIdle = "Idle";
 		_animRun = "Run";
 
-		if(!IsAttack)
+		if(!isAttack)
 		   _currentSpeed = _startSpeed;
 
 		CharacterBody.StopCrouch();
@@ -261,19 +260,19 @@ public partial class PlayerController : Controller
 	{
 		_currentSpeed = _startSpeed;
 		_animAttack = "Attack(Idle)";
-		IsAttack = false;
+		isAttack = false;
 	}
 
 	public void EndIdleAttack()
 	{
 		_currentSpeed = _startSpeed;
-		IsAttack = false;
+		isAttack = false;
 	}
 
 	public void StartHurt()
 	{
 		CharacterBody.isHurt = true;
-		IsAttack = false;
+		isAttack = false;
 
 		EndCrouch();
 
