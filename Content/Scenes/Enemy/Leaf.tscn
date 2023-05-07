@@ -1,55 +1,227 @@
-[gd_scene load_steps=13 format=3 uid="uid://ty3e24tmfd7u"]
+[gd_scene load_steps=24 format=3 uid="uid://cyqgiiwgk3las"]
 
+[ext_resource type="Script" path="res://Content/Scripts/Characters/Leaf/LeafController.cs" id="1_abuho"]
 [ext_resource type="PackedScene" uid="uid://b8a6xeiu28cca" path="res://Content/Scenes/Enemy/monster_hp_widget.tscn" id="1_ibpdi"]
 [ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/UI/UI_MonsterHUD.cs" id="2_c4ie3"]
-[ext_resource type="Texture2D" uid="uid://dqerspgxirpuf" path="res://Content/Components/Monsters/Slime/SlimeHeard.png" id="3_avhtc"]
+[ext_resource type="Script" path="res://Content/Scripts/Characters/Leaf/LeafPawn.cs" id="2_rb8il"]
+[ext_resource type="Texture2D" uid="uid://btfixtpdjb2od" path="res://Content/Components/Monsters/Leaf/Leaf-Sheet.png" id="3_opvl4"]
 [ext_resource type="Script" path="res://Content/Scripts/GameComponents/DamageArea.cs" id="4_gvk0p"]
 [ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/ObservationComponent.cs" id="5_8n5ep"]
-[ext_resource type="Script" path="res://Content/Scripts/Ai/AiComponents/AttackComponent.cs" id="6_0qngy"]
+[ext_resource type="Texture2D" uid="uid://ceg6tfmdhm6lo" path="res://Content/Components/Sounds/GameSound/Leaf/LeadHead.png" id="6_i51v6"]
 [ext_resource type="Script" path="res://Content/Scripts/Characters/CharacterComponents/HealthComponent.cs" id="7_3iupn"]
+[ext_resource type="AudioStream" uid="uid://drylfaahkfniq" path="res://Content/Components/Sounds/GameSound/Leaf/LeafWalk.mp3" id="9_f301b"]
+[ext_resource type="Script" path="res://Content/Scripts/GameComponents/HitBoxCollision.cs" id="10_70udm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tksoe"]
+radius = 8.0
+height = 18.0
+
+[sub_resource type="Animation" id="Animation_pmylv"]
+resource_name = "Dead"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeafSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [21, 22, 23, 24, 24]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Dead"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_3ufv5"]
+resource_name = "Hurt"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeafSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [17, 18, 19, 20]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"Endhurt"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_laykb"]
+resource_name = "Idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeafSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_rgbkp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeafSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_y8l3r"]
+resource_name = "Shell"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeafSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [11, 12, 13, 14, 15, 16]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ShellState"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_1x8l2"]
+resource_name = "Walk"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeafSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t8snm"]
+_data = {
+"Dead": SubResource("Animation_pmylv"),
+"Hurt": SubResource("Animation_3ufv5"),
+"Idle": SubResource("Animation_laykb"),
+"RESET": SubResource("Animation_rgbkp"),
+"Shell": SubResource("Animation_y8l3r"),
+"Walk": SubResource("Animation_1x8l2")
+}
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jj7h1"]
-radius = 7.0
+radius = 5.0
 height = 26.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y7rak"]
-size = Vector2(100, 20)
+size = Vector2(50, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_emr73"]
-size = Vector2(120, 20)
+size = Vector2(50, 14)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_72ada"]
-size = Vector2(60, 20)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mynvw"]
+radius = 7.33333
+height = 19.3333
 
 [node name="LeafController" type="Node2D"]
+position = Vector2(5, 0)
+script = ExtResource("1_abuho")
 
 [node name="LeafBody" type="CharacterBody2D" parent="."]
+scale = Vector2(1.5, 1.5)
+collision_layer = 4
+script = ExtResource("2_rb8il")
 
 [node name="PhisicCollision" type="CollisionShape2D" parent="LeafBody"]
+position = Vector2(-3, -1)
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_tksoe")
+debug_color = Color(0.65098, 0.517647, 0, 0.419608)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="LeafBody"]
+[node name="Animation" type="AnimationPlayer" parent="LeafBody"]
+libraries = {
+"": SubResource("AnimationLibrary_t8snm")
+}
 
 [node name="LeafSprite" type="Sprite2D" parent="LeafBody"]
+position = Vector2(-3.33333, -6)
+texture = ExtResource("3_opvl4")
+flip_h = true
+hframes = 25
+frame = 1
 
 [node name="MonsterHpWidget" parent="LeafBody" instance=ExtResource("1_ibpdi")]
 offset_top = -25.0
 offset_bottom = -25.0
 script = ExtResource("2_c4ie3")
-Hp = ExtResource("3_avhtc")
+Hp = ExtResource("6_i51v6")
 
 [node name="DamageArea" type="Area2D" parent="LeafBody"]
 collision_layer = 64
 collision_mask = 8
 script = ExtResource("4_gvk0p")
+DamageAreaType = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeafBody/DamageArea"]
-visible = false
-position = Vector2(16, -7)
+position = Vector2(-5.33333, -8)
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_jj7h1")
-disabled = true
 debug_color = Color(0.992157, 0, 0.227451, 0.419608)
 
 [node name="ObservationComponent" type="Area2D" parent="LeafBody"]
@@ -58,26 +230,17 @@ collision_mask = 2
 script = ExtResource("5_8n5ep")
 
 [node name="LeftCollisionShape2D" type="CollisionShape2D" parent="LeafBody/ObservationComponent"]
-position = Vector2(-50, -6)
+position = Vector2(-28.6667, -2)
 shape = SubResource("RectangleShape2D_y7rak")
 debug_color = Color(0, 0.619608, 0.721569, 0.419608)
 
 [node name="RightCollisionShape2D2" type="CollisionShape2D" parent="LeafBody/ObservationComponent"]
-position = Vector2(60, -6)
+position = Vector2(21.3333, -2)
 shape = SubResource("RectangleShape2D_emr73")
 debug_color = Color(0, 0.603922, 0.686275, 0.419608)
 
-[node name="AttackComponent" type="Area2D" parent="LeafBody"]
-collision_layer = 256
-collision_mask = 2
-script = ExtResource("6_0qngy")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeafBody/AttackComponent"]
-position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_72ada")
-debug_color = Color(0.298039, 0.815686, 0, 0.419608)
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="LeafBody"]
+stream = ExtResource("9_f301b")
 max_distance = 250.0
 
 [node name="HealthComponent" type="Node" parent="LeafBody"]
@@ -86,3 +249,15 @@ script = ExtResource("7_3iupn")
 [node name="WalkDuration" type="Timer" parent="LeafBody"]
 wait_time = 10.0
 autostart = true
+
+[node name="Body" type="Area2D" parent="LeafBody"]
+collision_layer = 16
+collision_mask = 32
+script = ExtResource("10_70udm")
+CollisionType = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeafBody/Body"]
+position = Vector2(-3, -2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_mynvw")
+debug_color = Color(0, 0.627451, 0.513726, 0.419608)

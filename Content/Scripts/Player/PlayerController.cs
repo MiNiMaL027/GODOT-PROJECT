@@ -1,5 +1,6 @@
 using Godot;
 using GodotProject.Content.Scripts.Controllers;
+using GodotProject.Content.Scripts.enums;
 using GodotProject.Content.Scripts.Player.PlayerComponent;
 
 public partial class PlayerController : Controller
@@ -65,7 +66,16 @@ public partial class PlayerController : Controller
 
 				CharacterBody.MoveAndSlide();
 			}
-		}      
+		}
+		else if(!CharacterBody.HealthComponent.IsDead)
+		{
+			if (CharacterBody.MoveDirection == MoveDirection.Right)
+				CharacterBody.Velocity = new Vector2(-30f, CharacterBody.Velocity.Y);
+			else
+                CharacterBody.Velocity = new Vector2(30f, CharacterBody.Velocity.Y);
+
+            CharacterBody.MoveAndSlide();
+        }
 	}
 
 	public void MoveAndAnim(Vector2 direction, Vector2 velocity)

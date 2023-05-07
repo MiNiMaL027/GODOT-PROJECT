@@ -32,6 +32,7 @@ public partial class HealthComponent : Node
     {
         MaxHp = 3;
         DefenseComponent = new DefenseComponent();
+        DefenseComponent.Spikes = 0;
     }
 
     public void TakeDamage(int damage = 1,bool ignoreArmor = false)
@@ -99,6 +100,9 @@ public partial class HealthComponent : Node
             CurrentHp = _maxHp;
 
         HUDWidget.Refresh(CurrentHp, MaxHp, DefenseComponent.Defense);
+
+        if (HUDWidget is UI_MonsterHUD hud)
+            hud.Visible = false;
     }
 
     public void Init(IHUD widget, Controller Owner)

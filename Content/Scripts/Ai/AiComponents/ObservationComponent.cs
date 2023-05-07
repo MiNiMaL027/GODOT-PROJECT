@@ -44,7 +44,10 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents
             {
                 PawnEnemy = player;
 
-                AiOwner.Controller.WalkDuration.Stop();
+                if (AiOwner.Controller.isAggresive)
+                    return;
+
+                AiOwner.Controller.WalkDuration.Stop();                         
 
                 AiOwner.Controller.isAggresive = true;
 
@@ -59,6 +62,8 @@ namespace GodotProject.Content.Scripts.Ai.AiComponents
 
                     AiOwner.Controller.ChangeState();
                 }
+
+               
             }
         }
 

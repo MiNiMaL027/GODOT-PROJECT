@@ -9,8 +9,6 @@ public partial class player : Pawn
 
     public CollisionShape2D CollisionShape;
 
-    public HitBoxCollision BodyCollision;
-
     public HitBoxCollision HeadCollision;
 
     public override void _Ready()

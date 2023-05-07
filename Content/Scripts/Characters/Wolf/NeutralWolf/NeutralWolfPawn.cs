@@ -7,7 +7,6 @@ namespace GodotProject.Content.Scripts.Characters.Wolf.NeutralWolf
 {
     public partial class NeutralWolfPawn : AiAggresivePawn
     {
-        public HitBoxCollision BodyCollision;
         public UI_MonsterHUD Widget { get; set; }
 
         public override void _Ready()

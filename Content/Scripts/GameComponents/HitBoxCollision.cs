@@ -6,7 +6,11 @@ public partial class HitBoxCollision : Area2D
 {
     public Pawn HitBoxOwner { get; set; }
 
+    public bool Block { get; set; }
+
     public CollisionShape2D CollisionShape { get; set; }
+
+    public CollisionShape2D PreviousCollisionShape { get; set; }
 
     [Export]
     public BodyParts CollisionType;
@@ -18,12 +22,27 @@ public partial class HitBoxCollision : Area2D
     }
 
     public void TakeDamage(int damage)
-    {  
-        HitBoxOwner.isHurt = true;
+    {
+        if (Block)
+            return;
+
+        HitBoxOwner.isHurt = true;      
 
         if(CollisionType == BodyParts.Head)
             HitBoxOwner.HealthComponent.TakeDamage(damage: damage, true);
         else
             HitBoxOwner.HealthComponent.TakeDamage(damage: damage);
+    }
+
+    public void ChangeCollisionShape(float radius, float height)
+    {
+        PreviousCollisionShape = CollisionShape;
+        (CollisionShape.Shape as CapsuleShape2D).Radius = radius;
+        (CollisionShape.Shape as CapsuleShape2D).Height = height;
+    }
+
+    public void RevertToPreviousShape()
+    {
+        CollisionShape = PreviousCollisionShape;
     }
 }

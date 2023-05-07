@@ -7,6 +7,7 @@ namespace GodotProject.Content.Scripts.Characters
     public partial class Pawn : CharacterBody2D
     {
         public HealthComponent HealthComponent { get; set; }
+        public HitBoxCollision BodyCollision { get; set; }
         public int Damage { get; set; } = 1;
         public bool isHurt { get; set; }
         public Controller Controller { get; set; }

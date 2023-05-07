@@ -6,7 +6,6 @@ namespace GodotProject.Content.Scripts.Characters.Wolf
 {
     public partial class FriendlyWolfPawn : AiPawn
     {
-        public HitBoxCollision BodyCollision;
         public UI_MonsterHUD Widget { get; set; }     
 
         public override void _Ready()

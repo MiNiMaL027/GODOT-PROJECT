@@ -5,9 +5,7 @@ using GodotProject.Content.Scripts.Characters.CharacterComponents.UI;
 using GodotProject.Content.Scripts.enums;
 
 public partial class SlimePawn : AiAggresivePawn
-{
-    public HitBoxCollision BodyCollision;
-    
+{  
     public override void _Ready()
     {
         MemoryTime = 10;

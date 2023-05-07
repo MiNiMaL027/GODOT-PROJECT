@@ -4,6 +4,8 @@
     {
         public int Defense { get; set; }
 
+        public int Spikes { get; set; } = 0;
+
         public DefenseComponent()
         {
             Defense = 0;

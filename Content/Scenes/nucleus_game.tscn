@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ciohgk1omldlw"]
+[gd_scene load_steps=6 format=3 uid="uid://ciohgk1omldlw"]
 
 [ext_resource type="PackedScene" uid="uid://vqjqn8dnctrf" path="res://Content/Scenes/World.tscn" id="2_8ux1a"]
 [ext_resource type="PackedScene" uid="uid://dkp02og30gwkd" path="res://Content/Scenes/Player.tscn" id="2_pbypm"]
 [ext_resource type="AudioStream" uid="uid://bma3tb3801jae" path="res://Content/Components/Sounds/11.04.2023.ogg" id="3_3n35e"]
-[ext_resource type="PackedScene" uid="uid://nditpogj6ye5" path="res://Content/Scenes/Enemy/BigSlime.tscn" id="5_k8u77"]
-[ext_resource type="PackedScene" uid="uid://cnn16q314kq7m" path="res://Content/Scenes/Enemy/FriendlyWolf.tscn" id="6_1vvnp"]
+[ext_resource type="PackedScene" uid="uid://cyqgiiwgk3las" path="res://Content/Scenes/Enemy/Leaf.tscn" id="5_r8frr"]
 [ext_resource type="PackedScene" uid="uid://jus0tr1edy53" path="res://Content/Scenes/Enemy/NeutralWolf.tscn" id="7_oyeqh"]
 
 [node name="nucleusGame" type="Node"]
@@ -20,11 +19,8 @@ stream = ExtResource("3_3n35e")
 volume_db = -10.0
 autoplay = true
 
-[node name="BigSlimeController" parent="." instance=ExtResource("5_k8u77")]
-position = Vector2(-337, -74)
-
 [node name="NeutralWolfController" parent="." instance=ExtResource("7_oyeqh")]
-position = Vector2(188, -74)
+position = Vector2(424, -71)
 
-[node name="FriendlyWolfController" parent="." instance=ExtResource("6_1vvnp")]
-position = Vector2(-101, -90)
+[node name="LeafController" parent="." instance=ExtResource("5_r8frr")]
+position = Vector2(134, -72)

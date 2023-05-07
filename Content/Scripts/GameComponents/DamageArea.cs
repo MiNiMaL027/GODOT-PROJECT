@@ -7,9 +7,12 @@ using System.Collections.Generic;
 
 public partial class DamageArea : Area2D
 {
-    public Pawn HitBoxOwner { get; set; }
+    public Pawn DamageAreaOwner { get; set; }
 
     public AttackType CollisionType;
+
+    [Export]
+    public DamageAreaType DamageAreaType { get; set; }
 
     public CollisionShape2D CollisionShape;
 
@@ -22,8 +25,8 @@ public partial class DamageArea : Area2D
 
     public void Init(Pawn pawn)
     {
-        HitBoxOwner = pawn;
-        CollisionShape = HitBoxOwner.DamageArea.GetChild<CollisionShape2D>(0);
+        DamageAreaOwner = pawn;
+        CollisionShape = DamageAreaOwner.DamageArea.GetChild<CollisionShape2D>(0);
         StartAreaPosition = CollisionShape.Position;
         StartAreaRotation = CollisionShape.Rotation;
         Timer = new Timer();
@@ -35,12 +38,12 @@ public partial class DamageArea : Area2D
 
     public void ChangeDamageArea(AttackTransform attackTransform)
     {    
-        if(HitBoxOwner.MoveDirection == MoveDirection.Right)
+        if(DamageAreaOwner.MoveDirection == MoveDirection.Right)
         {
             CollisionShape.Position = attackTransform.Position;
             CollisionShape.Rotation = attackTransform.Rotation;
         }
-        else if(HitBoxOwner.MoveDirection == MoveDirection.Left)
+        else if(DamageAreaOwner.MoveDirection == MoveDirection.Left)
         {
             CollisionShape.Position = new Vector2(-attackTransform.Position.X, attackTransform.Position.Y);
             CollisionShape.Rotation = -attackTransform.Rotation;
@@ -58,6 +61,9 @@ public partial class DamageArea : Area2D
         {
             if(!damageArea.HitBoxOwner.isHurt)
                 EnteredHitBoxs.Add(damageArea);
+
+            if(DamageAreaType == DamageAreaType.Static)
+                Attack();
         }
     }
 
@@ -65,7 +71,14 @@ public partial class DamageArea : Area2D
     {
         if (EnteredHitBoxs.Count != 0)
         {
-            EnteredHitBoxs[0].TakeDamage(HitBoxOwner.Damage);
+            EnteredHitBoxs[0].TakeDamage(DamageAreaOwner.Damage);
+
+            if (EnteredHitBoxs[0].HitBoxOwner.HealthComponent.DefenseComponent.Spikes > 0)
+            {
+                GD.Print("Spekes");
+                DamageAreaOwner.BodyCollision.TakeDamage(EnteredHitBoxs[0].HitBoxOwner.HealthComponent.DefenseComponent.Spikes);
+            }
+
             EnteredHitBoxs.Clear();
         }
             
