@@ -34,7 +34,6 @@ namespace GodotProject.Content.Scripts.Characters
                 DamageArea.CollisionShape.Position = new Vector2(DamageArea.StartAreaPosition.X, DamageArea.StartAreaPosition.Y);
                 DamageArea.CollisionShape.Rotation = DamageArea.StartAreaRotation;
 
-
                 (ObservationComponent.RightCollisionShape.Shape as RectangleShape2D).Size = new Vector2(
                     ObservationComponent.CollisionShapeScale.X / 2,
                     ObservationComponent.CollisionShapeScale.Y);

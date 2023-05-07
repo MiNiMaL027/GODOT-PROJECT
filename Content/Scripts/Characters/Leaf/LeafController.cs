@@ -20,8 +20,8 @@ public partial class LeafController : RestController<LeafController>
 
         WalkDuration.Timeout += ChooseDirection;
 
-        Attack = new AttackTransform() { Transform = new Vector2(9.5f, 21f), Rotation = 99f, Position = new Vector2(3f, -3f) };
-        UpAttack = new AttackTransform() { Transform = new Vector2(5f, 26f), Rotation = 99f, Position = new Vector2(1f, -8f) };
+        Attack = new AttackTransform() { Transform = new Vector2(9.5f, 21f), Rotation = 99f, Position = new Vector2(0f, -3f) };
+        UpAttack = new AttackTransform() { Transform = new Vector2(5f, 26f), Rotation = 99f, Position = new Vector2(0f, -6f) };
     }
 
 	public override void _Process(double delta)

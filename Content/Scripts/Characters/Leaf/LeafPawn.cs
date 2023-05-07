@@ -4,7 +4,7 @@ using GodotProject.Content.Scripts.Characters;
 using GodotProject.Content.Scripts.Characters.CharacterComponents.UI;
 using GodotProject.Content.Scripts.enums;
 
-public partial class LeafPawn : AiPawn
+public partial class LeafPawn : AiAggresivePawn
 {
 
     public override void _Ready()
@@ -39,5 +39,15 @@ public partial class LeafPawn : AiPawn
             DamageArea.ChangeDamageArea(Controller.Attack);
         else
             DamageArea.ChangeDamageArea(Controller.UpAttack);
+    }
+
+    public override void ChooseAttack()
+    {
+        return;
+    }
+
+    public override void FinishAttack()
+    {
+        return;
     }
 }

@@ -75,7 +75,6 @@ public partial class DamageArea : Area2D
 
             if (EnteredHitBoxs[0].HitBoxOwner.HealthComponent.DefenseComponent.Spikes > 0)
             {
-                GD.Print("Spekes");
                 DamageAreaOwner.BodyCollision.TakeDamage(EnteredHitBoxs[0].HitBoxOwner.HealthComponent.DefenseComponent.Spikes);
             }
 

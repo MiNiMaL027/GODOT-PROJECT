@@ -23,4 +23,4 @@ autoplay = true
 position = Vector2(424, -71)
 
 [node name="LeafController" parent="." instance=ExtResource("5_r8frr")]
-position = Vector2(134, -72)
+position = Vector2(183, -76)

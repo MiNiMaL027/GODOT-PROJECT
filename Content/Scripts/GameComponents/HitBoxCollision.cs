@@ -10,7 +10,7 @@ public partial class HitBoxCollision : Area2D
 
     public CollisionShape2D CollisionShape { get; set; }
 
-    public CollisionShape2D PreviousCollisionShape { get; set; }
+    public Vector2 PreviousCollisionShape { get; set; }
 
     [Export]
     public BodyParts CollisionType;
@@ -36,13 +36,15 @@ public partial class HitBoxCollision : Area2D
 
     public void ChangeCollisionShape(float radius, float height)
     {
-        PreviousCollisionShape = CollisionShape;
+        PreviousCollisionShape = new Vector2((CollisionShape.Shape as CapsuleShape2D).Radius, (CollisionShape.Shape as CapsuleShape2D).Height);
         (CollisionShape.Shape as CapsuleShape2D).Radius = radius;
         (CollisionShape.Shape as CapsuleShape2D).Height = height;
     }
 
     public void RevertToPreviousShape()
     {
-        CollisionShape = PreviousCollisionShape;
+        GD.Print("Yes");
+        (CollisionShape.Shape as CapsuleShape2D).Radius = PreviousCollisionShape.X;
+        (CollisionShape.Shape as CapsuleShape2D).Height = PreviousCollisionShape.Y;
     }
 }
